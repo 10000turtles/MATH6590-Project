@@ -22,7 +22,7 @@ float map(float value, float x1, float x2, float newX1, float newX2);
 // Global Variables
 GLuint        VBO;
 int           numOfComponents = 2;
-int           numOfVertices   = 100;
+int           numOfVertices   = 10000;
 vector<float> vertices(numOfComponents* numOfVertices);
 
 int main(int argc, char* argv[])
@@ -95,7 +95,7 @@ void RenderScene(void)
   glVertexAttribPointer(0, numOfComponents, GL_FLOAT, GL_FALSE, 0, 0);
 
   // Draws our points to the screen
-  glDrawArrays(GL_POINTS, 0, numOfVertices);
+  glDrawArrays(GL_LINE_STRIP, 0, numOfVertices);  // GL_POINTS
 
   glDisableVertexAttribArray(0);
 
