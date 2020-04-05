@@ -26,7 +26,7 @@ vector<vector<float>> graphFunction();
 // Global Variables
 GLuint VBO;
 
-char const* windowName = "Shallow Water Waves";
+char const* windowName = "Heat Wave Equation";
 
 int windowWidth     = 1000;
 int windowLength    = 1000;
@@ -152,7 +152,7 @@ vector<vector<float>> graphFunction()
   {
     float x            = map(i, 0, numOfComponents * numOfVerticesX, Xmin, Xmax);
     vertices[0][i]     = map(x, Xmin, Xmax, -windowWidth, windowWidth);
-    vertices[0][i + 1] = map((x * x * x * 4 + 3 * x * x + 2 * x + 1) * 5 * exp(-x * x), Ymin, Ymax, -windowLength, windowLength);
+    vertices[0][i + 1] = map((x * x * x * 4 + 3 * x * x + 2 * x + 5) * 5 * exp(-x * x) * 2 * sin(x * x), Ymin, Ymax, -windowLength, windowLength);
   }
 
   // Finite Difference Equations
