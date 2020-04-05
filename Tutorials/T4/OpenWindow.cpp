@@ -26,35 +26,41 @@ static void InitializeGlutCallbacks();
 // Global Variables
 GLuint VBO;
 
-int           numOfComponents = 3;
-int           numOfVerticesX  = 100;
-int           numOfVerticesY  = 100;
-const char*   pVSFileName     = "shader.vs";
-const char*   pFSFileName     = "shader.fs";
-vector<float> vertices(numOfComponents* numOfVerticesX* numOfVerticesY);
+int numOfComponents = 2;
+int numOfVerticesX  = 10000;
+// int           numOfVerticesY  = 100;
+const char*   pVSFileName = "shader.vs";
+const char*   pFSFileName = "shader.fs";
+vector<float> vertices(numOfComponents* numOfVerticesX);
 
 int main(int argc, char* argv[])
 {
   // Variables
-  int         windowWidth     = 1024;
-  int         windowLength    = 768;
-  int         windowXPosition = 1500;
-  int         windowYPosition = 400;
-  char const* windowName      = "My Second Open GL Program";
+  int windowWidth     = 1024;
+  int windowLength    = 768;
+  int windowXPosition = 1500;
+  int windowYPosition = 400;
 
-  for (int i = 0; i < numOfVerticesX; i++)
+  char const* windowName = "My Second Open GL Program";
+
+  float Tmin = 0;
+  float Tmax = 10000;
+  float Xmin = -4.5;
+  float Xmax = 4.5;
+  float Ymin = -3.5;
+  float Ymax = 3.5;
+
+  float a = 11;
+  float b = 10;
+  for (int j = 1; j < numOfVerticesX; j++)
   {
-    float x = map(float(i) / numOfVerticesX, 0, 1, -10, 10);
-    for (int j = 0; j < numOfVerticesY; j++)
+    for (int i = 0; i < j; i += 2)
     {
-      int   indexBuff         = j * numOfComponents * numOfVerticesY + numOfComponents * i;
-      float y                 = map(float(j) / numOfVerticesY, 0, 1, -10, 10);
-      vertices[indexBuff]     = map(x, -10, 10, -1, 1);
-      vertices[indexBuff + 2] = map(y, -10, 10, -1, 1);
-      vertices[indexBuff + 1] = map(sin(x) * y, -10, 10, -1, 1);
+      float t         = map(float(i) / numOfVerticesX, 0, 1, Tmin, Tmax);
+      vertices[i]     = map(4 * sin(a / b * t), Xmin, Xmax, -1, 1);
+      vertices[i + 1] = map(3 * sin(t), Ymin, Ymax, -1, 1);
     }
   }
-
 
   // Converting vector into array
   float temp[vertices.size()];
@@ -117,7 +123,7 @@ void RenderScene(void)
   glVertexAttribPointer(0, numOfComponents, GL_FLOAT, GL_FALSE, 0, 0);
 
   // Draws our points to the screen
-  glDrawArrays(GL_POINTS, 0, numOfVerticesX * numOfVerticesY);  // GL_POINTS
+  glDrawArrays(GL_POINTS, 0, numOfVerticesX);  // GL_POINTS
 
 
   glDisableVertexAttribArray(0);
