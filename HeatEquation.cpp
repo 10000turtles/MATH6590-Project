@@ -28,10 +28,10 @@ GLuint VBO;
 
 char const* windowName = "Heat Wave Equation";
 
-int windowWidth     = 1000;
-int windowLength    = 1000;
-int windowXPosition = 1500;
-int windowYPosition = 100;
+int windowWidth     = 3000;
+int windowLength    = 1400;
+int windowXPosition = 0;
+int windowYPosition = 0;
 
 const char*           pVSFileName = "shader.vs";
 const char*           pFSFileName = "shader.fs";
@@ -73,7 +73,8 @@ void myInit(void)
   glColor3f(0.1, 0.2, 0.9);
 
   // Set width of point to one unit
-  glPointSize(1.0);
+  glPointSize(40.0);
+  glLineWidth(3.0);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
@@ -104,7 +105,7 @@ void display(void)
     glFlush();
     i++;
     i = i % vertices.size();
-    usleep(4000);
+    usleep(100000);
   }
 }
 
@@ -152,7 +153,7 @@ vector<vector<float>> graphFunction()
   {
     float x            = map(i, 0, numOfComponents * numOfVerticesX, Xmin, Xmax);
     vertices[0][i]     = map(x, Xmin, Xmax, -windowWidth, windowWidth);
-    vertices[0][i + 1] = map((x * x * x * 4 + 3 * x * x + 2 * x + 5) * 5 * exp(-x * x) * 2 * sin(x * x), Ymin, Ymax, -windowLength, windowLength);
+    vertices[0][i + 1] = map(1.5 * (x * x * x + 3 * x * x + 2 * x + 5) * exp(-x * x) + sin(x * x), Ymin, Ymax, -windowLength, windowLength);
   }
 
   // Finite Difference Equations
